@@ -4,11 +4,13 @@ import "./App.css";
 import Layout from "./components/Layout";
 import { Routes, Route } from "react-router-dom";
 import Home from "./components/home/Home";
-import { Carousel } from "react-material-ui-carousel";
+import Carousel from "react-material-ui-carousel"; // Correct import for Carousel
 import { Paper } from "@mui/material";
+import Header from "./components/header/Header";
+import Trailer from "./components/trailer/Trailer";
 
 function App() {
-  const [movies, setMovies] = useState();
+  const [movies, setMovies] = useState([]);
 
   const getMovies = async () => {
     try {
@@ -26,29 +28,13 @@ function App() {
 
   return (
     <div>
-      <Carousel>
-        {movies.map((movie, index) => (
-          <Paper key={index}>
-            <div className="movie-card-container">
-              <div className="movie-card">
-                <div className="movie-detail">
-                  <div className="movie-poster">
-                    <img src={movie.poster} alt={movie.title} />
-                  </div>
-                  <div className="movie-title">
-                    <h4>{movie.title}</h4>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Paper>
-        ))}
-      </Carousel>
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        {/* <Route index element={<Home movies={movies} />} /> */}
-      </Route>
-    </Routes>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Home movies={movies} />} />
+          <Route path="/Trailer/:ytTrailerId" element={<Trailer />} />
+        </Route>
+      </Routes>
     </div>
   );
 }
